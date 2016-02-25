@@ -13,11 +13,10 @@ shinyUI(fluidPage(
            uiOutput("comment1"),
            uiOutput("comment2"),
            uiOutput("comment3")
-           #style="border-right:1px solid #000;height:500px"
     ),
     column(5,
            h4("Ratings:"),
-           #br(),
+           br(),
            plotOutput("ratings")
     )
   ),
@@ -32,6 +31,6 @@ shinyUI(fluidPage(
            tags$textarea(id="newcomment", rows=3, cols=90)
     )
   ),
-  submitButton("Send"),
+  actionButton("send","Send"),
   tableOutput("debug")
 ))

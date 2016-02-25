@@ -24,9 +24,11 @@ dataToUI = function(x){
 
 shinyServer(function(input,output){
   view <<- view + 1 # Every time the page is loaded, it counts as a page view.
-  feedback.update = reactive({
+  observeEvent(input$send,{
     feedback <<- rbind(feedback, data.frame(username = input$username, comments = input$newcomment, time = as.character(Sys.time()), rate = input$newrating))
-    return(feedback)
+  })
+  feedback.update = reactive({
+    if(input$send) feedback
   })
   output$comment1 = renderUI({
     div(
