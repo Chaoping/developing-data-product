@@ -1,4 +1,6 @@
 library(shiny)
+starttime = Sys.time() # Track the session start time.
+
 
 shinyUI(fluidPage(
   titlePanel("Visitor Rating System"),
@@ -8,16 +10,17 @@ shinyUI(fluidPage(
   p("Chaoping Guo"),
   hr(),
   fluidRow(
-    column(7,
+    column(6,
            h4("Last 3 Comments:"),
            uiOutput("comment1"),
            uiOutput("comment2"),
            uiOutput("comment3")
     ),
+    column(1),
     column(5,
            h4("Ratings:"),
            br(),
-           plotOutput("ratings")
+           uiOutput("ratings")
     )
   ),
   hr(),
@@ -31,6 +34,6 @@ shinyUI(fluidPage(
            tags$textarea(id="newcomment", rows=3, cols=90)
     )
   ),
-  actionButton("send","Send"),
-  tableOutput("debug")
+  actionButton("send","Send"), 
+  div("Session started at: ",as.character(starttime), align = "right")
 ))
