@@ -1,9 +1,8 @@
 library(shiny)
 
 ## Initialize the variables
-feedback = data.frame(username = character(0),comments = character(0), time = character(0), rate = numeric(0))
-five = four = three = two = one = 0 # Number of ratings
-view = 0 # Number of Page view
+feedback = read.csv("feedback.csv")
+feedback[is.na(feedback)] = ""
 
 # A function to generate the star icons :D
 stars = function(n){ 
@@ -27,7 +26,6 @@ dataToUI = function(x){
 }
 
 shinyServer(function(input,output){
-  view <<- view + 1 # Every time the page is loaded, it counts as a page view.
   feedback.update = reactive({
     if(input$send) {  # if the button is clicked, update the value
       feedback <<- isolate( # isolate other input so they don't have to trigger the invalidation.
@@ -38,6 +36,7 @@ shinyServer(function(input,output){
           rate = as.numeric(as.character(input$newrating))
         ))
       )
+      write.csv(feedback, "feedback.csv", row.names = F)
     }
     feedback
     
